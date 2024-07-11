@@ -1,11 +1,11 @@
 from nilearn import datasets
 from nilearn.maskers import NiftiMapsMasker
-from sklearn.dummy import DummyClassifier
-from sklearn.model_selection import GridSearchCV, train_test_split
-from sklearn.pipeline import Pipeline
+from sklearn.model_selection import train_test_split
 from sklearn.svm import LinearSVC
 import numpy as np
 from nilearn.connectome import ConnectivityMeasure
+from nilearn.decoding import Decoder
+from models import ADHD_SVC
 
 
 
@@ -37,15 +37,15 @@ for func_file, confound_file, phenotypic in zip(
     time_series = masker.fit_transform(func_file, confounds=confound_file)
 
     correlation_measure = ConnectivityMeasure(
-        kind="correlation",
+        kind="precision",
         standardize="zscore_sample",
     )
+
     correlation_matrix = correlation_measure.fit_transform([time_series])[0]
 
     connectivity_data.append(correlation_matrix)
     labels.append(phenotypic['adhd'])
 
-X_train,X_test,y_train,y_test = train_test_split(connectivity_data,labels,test_size=0.2,random_state=1)
 
-
+ADHD_SVC(connectivity_data,labels)
 
