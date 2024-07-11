@@ -37,14 +37,18 @@ print(time_series.shape)
 
 correlation_measure = ConnectivityMeasure(
     kind="correlation",
-    standardize="zscore_sample",
+    standardize=True,
 )
 correlation_matrix = correlation_measure.fit_transform([time_series])[0]
 
 # Mask out the major diagonal
 np.fill_diagonal(correlation_matrix, 0)
-plotting.plot_matrix(
-    correlation_matrix, labels=labels, colorbar=True, vmax=1, vmin=-1
+
+coords = atlas.region_coords
+
+
+plotting.plot_connectome(
+    correlation_matrix, coords, edge_threshold="80%", colorbar=True
 )
 
 plotting.show()
