@@ -43,7 +43,7 @@ estimator.fit(time_series)
 from nilearn import plotting
 
 # Display the covariance
-'''
+
 # The covariance can be found at estimator.covariance_
 plotting.plot_matrix(
     estimator.covariance_,
@@ -58,27 +58,7 @@ plotting.show()
 
 
 
-plotting.plot_connectome(estimator.covariance_, coords, title="Covariance")
 
-plotting.show()
 
-plotting.plot_matrix(
-    -estimator.precision_,
-    labels=labels,
-    figure=(9, 7),
-    vmax=1,
-    vmin=-1,
-    title="Sparse inverse covariance",
-)
 
-plotting.show()
-'''
-
-coords = atlas.region_coords
-
-plotting.plot_connectome(
-    -estimator.precision_, coords, title="Sparse inverse covariance"
-)
-
-plotting.show()
 
